@@ -1,0 +1,8 @@
+data/widerface/WIDER_test
+data/widerface/WIDER_train
+data/widerface/WIDER_val
+results/
+archive/
+models/
+demo/
+trained_models/
