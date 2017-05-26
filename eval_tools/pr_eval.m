@@ -37,7 +37,7 @@ for i = 1:size(setting_name_list,1)
     setting_name = setting_name_list{i};
     gt_dir = sprintf('../tiny-face/eval_tools/ground_truth/wider_%s.mat',setting_name);
     fprintf( 'Reformatting ground truth file for %s difficulty.\n', setting_name_list{ i } );
-    gt_info = reform_gt( gt_dir, evt_idx );
+    gt_info = pr_reformat_gt( gt_dir, evt_idx );
     pr_evaluation( norm_pred_list, gt_info, setting_name, setting_class, legend_name );
 end
 

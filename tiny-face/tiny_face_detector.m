@@ -56,7 +56,7 @@ if ~exist(model_path)
 end
 
 % loadng pretrained model (and some final touches)
-fprintf('Loading pretrained detector model...\n');
+% fprintf('Loading pretrained detector model...\n');
 net = load(model_path);
 net = dagnn.DagNN.loadobj(net.net);
 if gpu_id > 0 % for matconvnet it starts with 1 
@@ -104,7 +104,7 @@ for s = 2.^scales
   img = imresize(raw_img, s, 'bilinear');
   img = bsxfun(@minus, img, averageImage);
 
-  fprintf('Processing %s at scale %f.\n', image_path, s);
+%   fprintf('Processing %s at scale %f.\n', image_path, s);
   
   if strcmp(net.device, 'gpu')
     img = gpuArray(img);
