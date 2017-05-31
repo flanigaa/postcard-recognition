@@ -22,7 +22,7 @@ function pr_evaluation( norm_pred_list, gt_info, setting_name, setting_class, le
         sub_gt_list = gt_info.gt_list{i};
         img_pr_info_list = cell(length(img_list),1);
 
-        fprintf('%s, current event %d\n',setting_name,i);
+        fprintf('%s, current event %d\n', setting_name, evt_idx{ i, 1 });
         for j = 1:length(img_list)
 
             gt_bbx = gt_bbx_list{j};

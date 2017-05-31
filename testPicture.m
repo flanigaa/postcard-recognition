@@ -14,12 +14,19 @@
 % @param gpu_id which gpu to use for testing. Starts at 1, 0 means no use
 %   of gpu
 % @return matrix of bounding boxes for the image
-function bboxes = testPicture( filePath, outputDir, prob_thresh, nms_thresh, gpu_id )
-    addpath( 'tiny-face' );
+function bboxes = testPicture( filePath, outputDir, prob_thresh, nms_thresh, gpu_id, img_as_path, display_image )
+    addpath tiny-face;
+    
+    if nargin < 6 || isempty( img_as_path )
+        img_as_path = true;
+    end
+    if nargin < 7 || isempty( display_image )
+        display_image = false;
+    end
 
     % runs tiny_face_detector on the given image with the given parameters
     bboxes = tiny_face_detector( filePath, outputDir, prob_thresh, ...
-        nms_thresh, gpu_id );
+        nms_thresh, gpu_id, img_as_path, display_image );
     
     % saves the bounding boxes to a mat file in the same directory of the
     %   saved image if given an output directory

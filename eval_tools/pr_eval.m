@@ -20,8 +20,8 @@
 addpath ../tiny-face/eval_tools;
 addpath pr_plot_tools;
 
-pred_name = 'pr-norm';
-pred_dir = '../widerface_test_res';
+pred_name = 'pr-grayscale';
+pred_dir = '../results/widerface_val/widerface_val_grayscale_res';
 gt_dir = '../tiny-face/eval_tools/ground_truth/wider_face_val.mat';
 
 [ pred_list, evt_idx ] = pr_read_pred( pred_dir, gt_dir );

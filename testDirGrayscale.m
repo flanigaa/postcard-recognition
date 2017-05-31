@@ -1,5 +1,5 @@
 % Function used to test an entire directory of images using
-% tiny_face_detector.
+% tiny_face_detector while converting them to grayscale first.
 %
 % Alec Flanigan 2017
 %
@@ -21,7 +21,7 @@
 % @param nms_thresh overlap threshold
 % @param gpu_id which gpu to use for testing. Starts at 1, 0 means no use
 %   of gpu
-function testDir( dir_path, out_path, prob_thresh, nms_thresh, gpu_id )
+function testDirGrayscale( dir_path, out_path, prob_thresh, nms_thresh, gpu_id )
 	img_dir = dir( dir_path );
     
     if ~exist( out_path, 'dir' )
@@ -66,9 +66,10 @@ function testDir( dir_path, out_path, prob_thresh, nms_thresh, gpu_id )
             
             cur_pic = pics( j );
             pic_path = sprintf( '%s/%s', cur_dir, cur_pic.name );
+            gray_pic = rgb2gray( imread( pic_path ) );
             
-            pic_res = testPicture( pic_path, '', prob_thresh, ...
-                nms_thresh, gpu_id, true );
+            pic_res = testPicture( gray_pic, '', prob_thresh, ...
+                nms_thresh, gpu_id, false);
             
             pic_dir = sprintf( '%s/%s', img_dir( i ).name, cur_pic.name );
             bbox_num = size( pic_res, 1 );

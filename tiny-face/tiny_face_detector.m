@@ -17,10 +17,10 @@
 %    Feel free to modify the code to suit your needs (such as batch processing). 
 
 
-function bboxes = tiny_face_detector(image_path, output_path, prob_thresh, nms_thresh, gpu_id)
+function bboxes = tiny_face_detector(image, output_path, prob_thresh, nms_thresh, gpu_id, img_as_path, display_image)
 
-if nargin < 1 || isempty(image_path)
-  image_path = 'data/demo/selfie.jpg';
+if nargin < 1 || isempty(image)
+  image = 'data/demo/selfie.jpg';
 end
 if nargin < 2 || isempty(output_path)
   output_path = './selfie.png';
@@ -33,6 +33,12 @@ if nargin < 4 || isempty(nms_thresh)
 end
 if nargin < 5 || isempty(gpu_id)
   gpu_id = 0;  % 0 means no use of GPU (matconvnet starts with 1) 
+end
+if nargin < 6 || isempty(img_as_path)
+  img_as_path = true;
+end
+if nargin < 7 || isempty(display_image)
+  display_image = false;
 end
 
 addpath ./tiny-face/matconvnet;
@@ -84,12 +90,16 @@ bboxes = [];
 
 % load input
 t1 = tic; 
-[~,name,ext] = fileparts(image_path);
-try
-  raw_img = imread(image_path);
-catch
-  error(sprintf('Invalid input image path: %s', image_path));
-  return;nms
+if img_as_path
+    [~,name,ext] = fileparts(image);
+    try
+      raw_img = imread(image);
+    catch
+      error(sprintf('Invalid input image path: %s', image));
+      return;nms
+    end
+else
+    raw_img = image;
 end
 
 % process input at different scales 
@@ -173,23 +183,25 @@ bboxes(:,[1 3]) = max(1, min(raw_w, bboxes(:,[1 3])));
 %
 t2 = toc(t1);
 
-% % visualize with grace 
-% vis_img = raw_img;
-% vis_bbox = bboxes;
-% if max(raw_h, raw_w) > MAX_DISP_DIM
-%   vis_scale = MAX_DISP_DIM/max(raw_h, raw_w);
-%   vis_img = imresize(raw_img, vis_scale);
-%   vis_bbox(:,1:4) = vis_bbox(:,1:4) * vis_scale;
-% end
-% visualize_detection(uint8(vis_img), vis_bbox, prob_thresh);
-% 
-% %
-% drawnow;
-% 
-% % (optional) export figure
-% if ~isempty(output_path)
-%   export_fig('-dpng', '-native', '-opengl', '-transparent', output_path, '-r300');
-% end
+if display_image
+    % % visualize with grace 
+    vis_img = raw_img;
+    vis_bbox = bboxes;
+    if max(raw_h, raw_w) > MAX_DISP_DIM
+      vis_scale = MAX_DISP_DIM/max(raw_h, raw_w);
+      vis_img = imresize(raw_img, vis_scale);
+      vis_bbox(:,1:4) = vis_bbox(:,1:4) * vis_scale;
+    end
+    visualize_detection(uint8(vis_img), vis_bbox, prob_thresh);
+
+    %
+    drawnow;
+
+    % (optional) export figure
+    if ~isempty(output_path)
+      export_fig('-dpng', '-native', '-opengl', '-transparent', output_path, '-r300');
+    end
+end
 
 fprintf('Detection was finished in %f seconds\n', t2);
 
