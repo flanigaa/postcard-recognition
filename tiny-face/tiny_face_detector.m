@@ -208,7 +208,7 @@ if display_image
     end
 end
 
-fprintf('Detection was finished in %f seconds\n', t2);
+% fprintf('Detection was finished in %f seconds\n', t2);
 
 % free gpu device
 if gpu_id > 0 

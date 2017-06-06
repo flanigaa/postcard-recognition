@@ -51,7 +51,7 @@ function testDirGrayscale( dir_path, out_path, prob_thresh, nms_thresh, gpu_id, 
         pic_start = 3;
     end
     
-	for i = evt_start : length( img_dir )
+    for i = evt_start : length( img_dir )
         
         cur_out_path = sprintf( '%s/%s', out_path, img_dir( i ).name );
         if ~exist( cur_out_path, 'dir' )
@@ -61,11 +61,13 @@ function testDirGrayscale( dir_path, out_path, prob_thresh, nms_thresh, gpu_id, 
 	    cur_dir = sprintf( '%s/%s', dir_path, img_dir( i ).name );
 	    pics = dir( cur_dir );
         
+        fprintf( 'Processing started for dir %d/%d\n', i-2, length(img_dir)-2 );
+        
         for j = pic_start : length( pics )
             
-            fprintf( 'Processing image %i/%i from %s (dir %d/%d)\n', ...
-                j-2, length( pics )-2 ,img_dir( i ).name, (i-2), ...
-                length( img_dir)-2 );
+%             fprintf( 'Processing image %i/%i from %s (dir %d/%d)\n', ...
+%                 j-2, length( pics )-2 ,img_dir( i ).name, (i-2), ...
+%                 length( img_dir)-2 );
             
             cur_pic = pics( j );
             pic_path = sprintf( '%s/%s', cur_dir, cur_pic.name );
@@ -96,7 +98,6 @@ function testDirGrayscale( dir_path, out_path, prob_thresh, nms_thresh, gpu_id, 
         
         pic_start = 3;
         
-        fprintf( 'Processing complete for %s\n', img_dir( i ).name );
     end
     
     delete( sprintf('%s/%s', out_path, 'checkpoint.txt') );

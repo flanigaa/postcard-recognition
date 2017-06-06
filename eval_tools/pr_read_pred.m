@@ -45,7 +45,7 @@ function [ pred_list, evt_idx ] = pr_read_pred( file_dir, gt_dir )
     % formats the prediction list
     for i = 1:evts_fnd
         cur_evt_num = evt_idx{ i, 1 };
-        fprintf( 'Read prediction: current event %d\n', cur_evt_num );
+%         fprintf( 'Read prediction: current event %d\n', cur_evt_num );
         cur_evt_imgs = evt_idx{ i, 2 };
 
         imgs_fnd = size( cur_evt_imgs, 1 );
