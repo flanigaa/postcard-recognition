@@ -17,15 +17,14 @@
 %
 % If the prediction or ground truth directory are different than defined,
 % change them as neccessary.
-addpath ../tiny-face/eval_tools;
 addpath pr_plot_tools;
 
-pred_name = 'pr-grayscale';
-pred_dir = '../results/widerface_val/widerface_val_grayscale_res';
+pred_name = 'pr-color';
+pred_dir = '../results/new_model/widerface_res';
 gt_dir = '../tiny-face/eval_tools/ground_truth/wider_face_val.mat';
 
 [ pred_list, evt_idx ] = pr_read_pred( pred_dir, gt_dir );
-norm_pred_list = pr_norm_score( pred_list );
+norm_pred_list = pr_norm_score( pred_list, evt_idx );
 
 %evaluate on different settings
 setting_name_list = {'easy_val';'medium_val';'hard_val'};
@@ -36,9 +35,9 @@ for i = 1:size(setting_name_list,1)
     fprintf('Current evaluation setting %s\n',setting_name_list{i});
     setting_name = setting_name_list{i};
     gt_dir = sprintf('../tiny-face/eval_tools/ground_truth/wider_%s.mat',setting_name);
-    fprintf( 'Reformatting ground truth file for %s difficulty.\n', setting_name_list{ i } );
+    fprintf( 'Reformatting ground truth file for %s difficulty.\n', setting_name );
     gt_info = pr_reformat_gt( gt_dir, evt_idx );
-    pr_evaluation( norm_pred_list, gt_info, setting_name, setting_class, legend_name );
+    pr_evaluation( norm_pred_list, gt_info, setting_name, setting_class, legend_name, evt_idx );
 end
 
 fprintf('Plot pr curve under overall setting.\n');

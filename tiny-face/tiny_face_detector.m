@@ -17,12 +17,12 @@
 %    Feel free to modify the code to suit your needs (such as batch processing). 
 
 
-function bboxes = tiny_face_detector(image, output_path, prob_thresh, nms_thresh, gpu_id, img_as_path, display_image)
+function bboxes = tiny_face_detector(image, output_path, prob_thresh, nms_thresh, gpu_id, img_as_path, display_image, tiny_face_path, model_path)
 
 if nargin < 1 || isempty(image)
   image = 'data/demo/selfie.jpg';
 end
-if nargin < 2 || isempty(output_path)
+if nargin < 2
   output_path = './selfie.png';
 end
 if nargin < 3 || isempty(prob_thresh)
@@ -40,25 +40,30 @@ end
 if nargin < 7 || isempty(display_image)
   display_image = false;
 end
+if nargin < 8 || isempty(tiny_face_path)
+  tiny_face_path = './'
+end
 
-addpath ./tiny-face/matconvnet;
-addpath ./tiny-face/matconvnet/matlab;
+addpath ( sprintf('%s/matconvnet', tiny_face_path) );
+addpath ( sprintf('%s/matconvnet/matlab', tiny_face_path) );
 vl_setupnn;
 
-addpath ./tiny-face/utils;
-addpath ./tiny-face/toolbox/nms;
-addpath ./tiny-face/toolbox/export_fig;
+addpath ( sprintf('%s/utils', tiny_face_path) );
+addpath ( sprintf('%s/toolbox/nms', tiny_face_path) );
+addpath ( sprintf('%s//toolbox/export_fig', tiny_face_path) );
 
 %
 MAX_INPUT_DIM = 5000;
 MAX_DISP_DIM = 3000;
 
 % specify pretrained model (download if needed)
-model_path = './tiny-face/trained_models/hr_res101.mat';
-if ~exist(model_path)
-  url = 'https://www.cs.cmu.edu/~peiyunh/tiny/hr_res101.mat';
-  cmd = ['wget -O ' model_path ' ' url];
-  system(cmd);
+if nargin < 9 || isempty(model_path)
+    model_path = ( sprintf('%s/trained_models/hr_res101.mat', tiny_face_path) );
+    if ~exist(model_path, 'file')
+      url = 'https://www.cs.cmu.edu/~peiyunh/tiny/hr_res101.mat';
+      cmd = ['wget -O ' model_path ' ' url];
+      system(cmd);
+    end
 end
 
 % loadng pretrained model (and some final touches)

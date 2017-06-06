@@ -4,7 +4,7 @@
 %
 % The function is a slightly modified version of the widerface plot
 % function.
-function pr_plot(set_list,dir_ext,seting_class,dateset_class)
+function pr_plot(set_list,dir_ext,setting_class,dateset_class)
 
     method_list = dir(dir_ext);
     model_num = size(method_list,1) - 2;
@@ -36,6 +36,6 @@ function pr_plot(set_list,dir_ext,seting_class,dateset_class)
         propose = propose(index);
         recall = recall(index);
         name_list = name_list(index);
-        pr_plot_pr(propose, recall, name_list, seting_class, set_list{i},dateset_class);
+        pr_plot_pr(propose, recall, name_list, setting_class, set_list{i},dateset_class);
     end
 end

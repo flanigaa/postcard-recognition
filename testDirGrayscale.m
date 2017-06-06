@@ -21,7 +21,10 @@
 % @param nms_thresh overlap threshold
 % @param gpu_id which gpu to use for testing. Starts at 1, 0 means no use
 %   of gpu
-function testDirGrayscale( dir_path, out_path, prob_thresh, nms_thresh, gpu_id )
+% @param tiny_face_path directory path to the tiny-face directory
+% @param model_path if using a different model, specify the path, otherwise
+%   leave empty for tiny-face default
+function testDirGrayscale( dir_path, out_path, prob_thresh, nms_thresh, gpu_id, tiny_face_path, model_path )
 	img_dir = dir( dir_path );
     
     if ~exist( out_path, 'dir' )
@@ -69,7 +72,7 @@ function testDirGrayscale( dir_path, out_path, prob_thresh, nms_thresh, gpu_id )
             gray_pic = rgb2gray( imread( pic_path ) );
             
             pic_res = testPicture( gray_pic, '', prob_thresh, ...
-                nms_thresh, gpu_id, false);
+                nms_thresh, gpu_id, false, false, tiny_face_path, model_path);
             
             pic_dir = sprintf( '%s/%s', img_dir( i ).name, cur_pic.name );
             bbox_num = size( pic_res, 1 );

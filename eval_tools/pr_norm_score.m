@@ -5,7 +5,7 @@
 %
 % The function is a slightly modified version of the widerface norm_score
 % function.
-function norm_pred_list = pr_norm_score(org_pred_list)
+function norm_pred_list = pr_norm_score(org_pred_list, evt_idx)
 
     event_num = size( org_pred_list, 1 );
     norm_pred_list = cell(event_num,1);
@@ -24,7 +24,7 @@ function norm_pred_list = pr_norm_score(org_pred_list)
     end
 
     parfor i = 1:event_num
-        fprintf('Norm prediction: current event %d\n',i);
+        fprintf('Norm prediction: current event %d\n',evt_idx{i, 1});
         pred_list = org_pred_list{i};
         for j = 1:size(pred_list,1)
             if(isempty(pred_list{j}))

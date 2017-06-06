@@ -13,9 +13,13 @@
 % @param nms_thresh overlap threshold
 % @param gpu_id which gpu to use for testing. Starts at 1, 0 means no use
 %   of gpu
+% @param tiny_face_path directory path to the tiny-face directory
+% @param model_path if using a different model, specify the path, otherwise
+%   leave empty for tiny-face default
+%
 % @return matrix of bounding boxes for the image
-function bboxes = testPicture( filePath, outputDir, prob_thresh, nms_thresh, gpu_id, img_as_path, display_image )
-    addpath tiny-face;
+function bboxes = testPicture( filePath, outputDir, prob_thresh, nms_thresh, gpu_id, img_as_path, display_image, tiny_face_path, model_path )
+    addpath( tiny_face_path );
     
     if nargin < 6 || isempty( img_as_path )
         img_as_path = true;
@@ -26,7 +30,7 @@ function bboxes = testPicture( filePath, outputDir, prob_thresh, nms_thresh, gpu
 
     % runs tiny_face_detector on the given image with the given parameters
     bboxes = tiny_face_detector( filePath, outputDir, prob_thresh, ...
-        nms_thresh, gpu_id, img_as_path, display_image );
+        nms_thresh, gpu_id, img_as_path, display_image, tiny_face_path, model_path );
     
     % saves the bounding boxes to a mat file in the same directory of the
     %   saved image if given an output directory

@@ -18,7 +18,7 @@ numSubBatches = 1;
 batchSize = 12;
 numEpochs = 50;
 tag = '';
-gpus = [1];
+gpus = [1, 2];
 if numel(gpus) > 1
   batchSize = batchSize * numel(gpus);
 end

@@ -1,4 +1,8 @@
-WIDER_test
-WIDER_train
-WIDER_val
+tiny-face/data/widerface/WIDER_test
+tiny-face/data/widerface/WIDER_train
+tiny-face/data/widerface/WIDER_val
+tiny-face/data/widerface/WIDER_train_grayscale
+widerface_test_dir
 results
+epoch_results
+comparisons

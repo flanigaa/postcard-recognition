@@ -21,7 +21,10 @@
 % @param nms_thresh overlap threshold
 % @param gpu_id which gpu to use for testing. Starts at 1, 0 means no use
 %   of gpu
-function testDir( dir_path, out_path, prob_thresh, nms_thresh, gpu_id )
+% @param tiny_face_path directory path to the tiny-face directory
+% @param model_path if using a different model, specify the path, otherwise
+%   leave empty for tiny-face default
+function testDir( dir_path, out_path, prob_thresh, nms_thresh, gpu_id, tiny_face_path, model_path )
 	img_dir = dir( dir_path );
     
     if ~exist( out_path, 'dir' )
@@ -48,7 +51,7 @@ function testDir( dir_path, out_path, prob_thresh, nms_thresh, gpu_id )
         pic_start = 3;
     end
     
-	for i = evt_start : length( img_dir )
+    for i = evt_start : length( img_dir )
         
         cur_out_path = sprintf( '%s/%s', out_path, img_dir( i ).name );
         if ~exist( cur_out_path, 'dir' )
@@ -67,8 +70,8 @@ function testDir( dir_path, out_path, prob_thresh, nms_thresh, gpu_id )
             cur_pic = pics( j );
             pic_path = sprintf( '%s/%s', cur_dir, cur_pic.name );
             
-            pic_res = testPicture( pic_path, '', prob_thresh, ...
-                nms_thresh, gpu_id, true );
+            pic_res = testPicture( pic_path, '', prob_thresh, nms_thresh, ...
+                gpu_id, true, false, tiny_face_path, model_path );
             
             pic_dir = sprintf( '%s/%s', img_dir( i ).name, cur_pic.name );
             bbox_num = size( pic_res, 1 );

@@ -24,7 +24,7 @@ cnt = 0;
 % train
 load(fullfile(opts.dataDir, 'wider_face_train.mat'));
 for i = 1:numel(event_list)
-    imageDir = fullfile('WIDER_train/images', event_list{i});
+    imageDir = fullfile('WIDER_train_grayscale/images', event_list{i});
     imageList = file_list{i};
     bboxList = face_bbx_list{i};
     for j = 1:numel(imageList)

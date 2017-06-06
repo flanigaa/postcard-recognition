@@ -2,9 +2,9 @@
 %
 % Alec Flanigan 2017
 %
-% The function is a slightly modified version of the widerfaec evaluation
+% The function is a slightly modified version of the widerface evaluation
 % function.
-function pr_evaluation( norm_pred_list, gt_info, setting_name, setting_class, legend_name )
+function pr_evaluation( norm_pred_list, gt_info, setting_name, setting_class, legend_name, evt_idx )
 
     if ~exist(sprintf('pr_plot_tools/baselines/Val/%s/%s',setting_class,legend_name),'dir')
         mkdir(sprintf('pr_plot_tools/baselines/Val/%s/%s',setting_class,legend_name));
@@ -54,6 +54,7 @@ function pr_evaluation( norm_pred_list, gt_info, setting_name, setting_class, le
     end
     pr_curve = dataset_pr_info(thresh_num, org_pr_curve, count_face);
     save(sprintf('pr_plot_tools/baselines/Val/%s/%s/wider_pr_info_%s_%s.mat',setting_class,legend_name,legend_name,setting_name),'pr_curve','legend_name','-v7.3');
+    save(sprintf('pr_plot_tools/baselines/Val/%s/%s/wider_org_pr_info_%s_%s.mat',setting_class,legend_name,legend_name,setting_name),'org_pr_curve','legend_name','-v7.3');
 end
 
 function [pred_recall,proposal_list] = image_evaluation(pred_info, gt_bbx, ignore, IoU_thresh)
