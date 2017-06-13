@@ -1,8 +1,9 @@
-tiny-face/data/widerface/WIDER_test
-tiny-face/data/widerface/WIDER_train
-tiny-face/data/widerface/WIDER_val
-tiny-face/data/widerface/WIDER_train_grayscale
-widerface_test_dir
-results
-epoch_results
-comparisons
+detection/tiny-face/data/widerface/WIDER_test
+detection/tiny-face/data/widerface/WIDER_train
+detection/tiny-face/data/widerface/WIDER_val
+detection/tiny-face/data/widerface/WIDER_train_grayscale
+detection/widerface_test_dir
+detection/detection_results
+detection/epoch_evaluation/epoch_results
+detection/comparison_tools/comparisons
+detection/postcard_data
